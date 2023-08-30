@@ -27,6 +27,6 @@ module.exports.logout = (req, res, next) => {
     if (err) {
       next(err);
     }
-    res.send("logged out");
+    res.redirect("/home");
   });
 };
