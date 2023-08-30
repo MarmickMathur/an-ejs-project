@@ -1,0 +1,133 @@
+<% layout('layouts/dashboard') -%>
+
+    <!-- 
+    <form action="/documents" method="post">
+        <label for="name">name</label>
+        <input type="text" name="name" id="name" value="">
+        <label for=" image">img url</label>
+        <input type="text" name="image" id="image" value="">
+        <button type="submit">submit</button>
+    </form> -->
+
+    <!-- Start block -->
+
+
+
+
+    <section class="bg-gray-50  dark:bg-gray-900">
+        <div class="flex flex-col w-full items-center  justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+
+            <div
+                class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <form action="/documents/<%= foundDoc._id %>?_method=put" method="post" enctype="multipart/form-data">
+
+                    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1
+                            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            edit <%= foundDoc.name %>
+                        </h1>
+                        <div class="space-y-4 md:space-y-6">
+
+                            <div class="mb-6">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    new name
+                                </label>
+                                <input type="text" id="name" name="name" value="<%= foundDoc.name %>"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required>
+                            </div>
+
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                for="images">Upload
+                                file</label>
+                            <input
+                                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                aria-describedby="user_avatar_help" id="images" name="images" type="file" multiple>
+                            <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="images_help">A profile
+                                picture is useful to confirm your are logged into your account</div>
+
+
+                            <button type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="bg-white dark:bg-gray-800 relative shadow-md m-auto sm:rounded-lg overflow-hidden">
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead
+                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-4">image</th>
+                                        <th scope="col" class="px-4 py-3"></th>
+                                        <th scope="col" class="px-4 py-3"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% foundDoc.images.forEach(img=> {%>
+
+                                        <tr class="border-b dark:border-gray-700">
+                                            <th scope="row"
+                                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <%= img.filename %>
+                                            </th>
+                                            <td class="px-4 py-3 ">
+                                                <button type="button" data-modal-target="<%= img._id %>"
+                                                    data-modal-toggle="<%= img._id %>"
+                                                    class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200">
+                                                    <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                                        viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                                            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                    </svg>
+                                                    view
+                                                </button>
+                                            </td>
+                                            <td class="px-4 py-3 ">
+                                                <input type="checkbox" name="todelete[]" value="<%= img.filename %>"
+                                                    id="checkbox-<%=img.filename%>">
+                                            </td>
+                                        </tr>
+                                        <%}); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Read modal -->
+                        <% foundDoc.images.forEach(img=> {%>
+                            <div id="<%= img._id %>" tabindex="-1" aria-hidden="true"
+                                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative p-4 w-full max-w-xl max-h-full">
+                                    <!-- Modal content -->
+                                    <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                                        <!-- Modal header -->
+
+
+                                        <dl>
+                                            <img src="<%= img.url %>" alt="gand">
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+
+
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- End block -->

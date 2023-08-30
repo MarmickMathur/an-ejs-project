@@ -1,0 +1,35 @@
+<% layout('layouts/dashboard') -%>
+
+
+
+    <section class="bg-white dark:bg-gray-900">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 ">
+            <div class="grid  content-center gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+
+                <% data.forEach(({name, _id,images})=>{%>
+                    <div
+                        class="max-w-sm align-middle content-center bg-white border  border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <a href="/documents/<%= _id %>">
+                            <img class="rounded-t-lg" src="<%= images[0].url %>" alt="" />
+                        </a>
+                        <div class="p-5 flex-row">
+
+
+                            <a href="/documents/<%= _id %>"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <%= name %>
+                                    <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <% }); %>
+
+            </div>
+        </div>
+    </section>
